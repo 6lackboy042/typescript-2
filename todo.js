@@ -14,21 +14,16 @@ class TodoList {
     }
 
     completeTodo(id: number): void {
-        const todo = this.todos.find(todo => todo.id === id);
+        const todo = this.todos.find(item => item.id === id);
         if (todo) {
             todo.completed = true;
         } else {
-            console.error(`Todo with id ${id} not found.`);
+            console.error(`Todo with ID ${id} not found.`);
         }
     }
 
     removeTodo(id: number): void {
-        const index = this.todos.findIndex(todo => todo.id === id);
-        if (index !== -1) {
-            this.todos.splice(index, 1);
-        } else {
-            console.error(`Todo with id ${id} not found.`);
-        }
+        this.todos = this.todos.filter(item => item.id !== id);
     }
 
     listTodos(): TodoItem[] {
@@ -36,19 +31,26 @@ class TodoList {
     }
 
     filterTodos(completed: boolean): TodoItem[] {
-        return this.todos.filter(todo => todo.completed === completed);
+        return this.todos.filter(item => item.completed === completed);
     }
 
     updateTodo(id: number, newTask: string): void {
-        const todo = this.todos.find(todo => todo.id === id);
+        const todo = this.todos.find(item => item.id === id);
         if (todo) {
             todo.task = newTask;
         } else {
-            console.error(`Todo with id ${id} not found.`);
+            console.error(`Todo with ID ${id} not found.`);
         }
     }
 
-    clearCompleted(): void {
-        this.todos = this.todos.filter(todo => !todo.completed);
+    clearCompletedTodos(): void {
+        this.todos = this.todos.filter(item => !item.completed);
     }
 }
+
+// Example Usage
+const myTodoList = new TodoList();
+myTodoList.addTodo("Buy groceries", new Date("2024-03-01"));
+myTodoList.addTodo("Finish project", new Date("2024-03-05"));
+myTodoList.completeTodo(1);
+console.log(myTodoList.listTodos());
